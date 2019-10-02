@@ -8,7 +8,6 @@ public class ChoumiController {
 
     @RequestMapping("/toHI")
     public String SayHi() {
-        System.out.println("33");
         return "sayHi";
     }
 }
