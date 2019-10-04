@@ -11,8 +11,8 @@
 
 <body>
 <div>
-    <a href="login">jump</a>
-    <form action="login.jsp" method="get">
+    <!--<a href="login">jump</a>-->
+    <form action="login" method="get">
         name: <input type="text" name="name"><br>
         nick: <input type="text" name="password"><br>
         <input type="submit" value="提交">
