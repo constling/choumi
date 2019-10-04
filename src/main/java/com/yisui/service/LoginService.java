@@ -2,18 +2,23 @@ package com.yisui.service;
 
 import com.yisui.dao.StudentDao;
 import com.yisui.model.Student;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
+@Service
 public class LoginService {
 
-    private StudentDao studentDao_;
+    private StudentDao studentDao;
 
-    public void setStudentDao_(StudentDao studentDao_) {
-        this.studentDao_ = studentDao_;
+    @Autowired
+    public void setStudentDao(StudentDao studentDao) {
+        this.studentDao = studentDao;
     }
 
-    public ArrayList<Student> QueryStudent() {
-        return studentDao_.queryStudents();
+    public List<Student> QueryStudent() {
+        return studentDao.queryStudents();
     }
 }

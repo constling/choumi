@@ -4,42 +4,36 @@ import com.yisui.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class StudentDao {
 
-    private JdbcTemplate jdbcTemplate_;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setJdbcTemplate_(JdbcTemplate jdbcTemplate_) {
-        this.jdbcTemplate_ = jdbcTemplate_;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     private final static String QUERY_ALL_SQL = "select * from student";
 
-    public ArrayList<Student> queryStudents() {
+    public List<Student> queryStudents() {
 
-        final ArrayList<Student> students = new ArrayList<Student>();
-        jdbcTemplate_.query(QUERY_ALL_SQL,  new Object[]{"",""}, new RowCallbackHandler() {
-            public void processRow(ResultSet resultSet) throws SQLException {
+        return jdbcTemplate.query(QUERY_ALL_SQL, new RowMapper<Student>() {
 
-                resultSet.beforeFirst();
-                while (resultSet.next()){
-
-                    Student item = new Student();
-                    item.setId(resultSet.getInt("id"));
-                    item.setName(resultSet.getString("name"));
-                    item.setSex(resultSet.getInt("sex"));
-                    students.add(item);
-                }
+            @Override
+            public Student mapRow(ResultSet rs, int index) throws SQLException {
+                Student student = new Student();
+                student.setId(rs.getInt("id"));
+                return student;
             }
         });
-
-        return students;
     }
 }
